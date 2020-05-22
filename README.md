@@ -12,7 +12,7 @@ The subroutine has to deal with this "spikes" and filter these out.<br>
 Interference of the signal can be caused by the weather, the sun, magnetrons, LEDs, displays, and other chips. 
 But also a bad power supply and even a bad power suply in the same group of the power line!<br>
 There are receivers that can receive other time transmitters on other wavelengths and some combine a few together. With serial communication the time can be read from these modules.<br>
-I wanted to make a clock that display the DCF77-signal.<br>
+I wanted to make a clock that display the DCF77-signal. https://github.com/ednieuw/DCFtiny-clock<br>
 This little program uses another approach. It loops and reads the signal continuously counting the positive and negative signals.
 In this loop it can read 50,000 signal per second with an Arduino running at 16Mhz clock speed.
 It simply divide the positive read by the total read and calculated percentages of 10% for a 0 and 20% for a 1 bit. Interference changes these percentages a little. The % is the length of the signal 105 = 100 msec and 20% is 200 msec.
