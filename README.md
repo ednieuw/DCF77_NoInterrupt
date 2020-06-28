@@ -12,15 +12,16 @@ When there is interference in the signal the interrupt is entered more then two 
 The subroutine has to deal with this "spikes" and filter these out.<br>
 Interference of the signal can be caused by the weather, the sun, magnetrons, LEDs, displays, and other chips.<br> 
 But also a bad power supply and even a bad power suply in the same group of the power line!<br><br>
-There are receivers that can receive other time transmitters on other wavelengths and some combine a few together. With serial communication the time can be read from these modules.<br>
-I wanted to make a clock that display the DCF77-signal. https://github.com/ednieuw/DCFtiny-clock<br>
-This little program uses another approach. It loops and reads the signal continuously counting the positive and negative signals.
+There are receivers that receive other time transmitters on other wavelengths and some combine a few together.<br> 
+Time and date can be read by serial communication from these modules.<br>
+I wanted to make a clock that displays the DCF77-signal. https://github.com/ednieuw/DCFtiny-clock<br>
+This little program presented does not use an interupt routine but another approach. It loops and reads the signal continuously counting the positive and negative signals.
 In this loop it can read 50,000 signal per second with an Arduino running at 16Mhz clock speed.<br>
 It simply divides the positive reads by the total reads and calculates percentages.<br>
-10% is a 0 and 20% is a 1 bit.<br>
-Interference changes these percentages a little. The % is the length of the signal 105 = 100 msec and 20% is 200 msec.
+Signal lengths between 5% and 15% is a 0 and between 15% and 30% is a 1 bit.<br>
+The % is the length of the signal 10% = 100 msec and 20% is 200 msec.
 I tried to optimize the program with several filters like the pulse must be longer than 50 msec or read every 10 msec 100 times the signal. These 'tricks' never resulted in more than 80% good time decoding.<br>
-This was probably caused by the drift of the internal Arduino clock of around 1 second every 5 minutes.<br>
+This was probably caused by the drift of the internal Arduino clock, that is used in the millisec() function, of around 1 second every 5 minutes.<br>
 The solution was to wait for a signal drop after 995 msec. This resulted in a 100% score in decoding the time from the signal when reception was optimal. The Arduino DCF77-library gives comparable results.<br>
 When the signal is not optimal combining the DCF77-library and this routine improves the 'good decoding score' by 20-40%.
 <br>
